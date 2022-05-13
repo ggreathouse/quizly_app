@@ -20,9 +20,9 @@ const UserType = new GraphQLObjectType({
             }
         },
             submissions: {
-                type: new GraphQLList(QuizType),
+                type: new GraphQLList(SubmissionType),
                 resolve(parent, args) {
-                    return Quiz.find({userID : parent.id})
+                    return Submission.find({userId : parent.id})
                 },
             }
         })
@@ -104,7 +104,7 @@ const QuizType = new GraphQLObjectType({
                 for (const submission of submissions){
                     score += submission.score
                 }
-                return score / submissions.length
+                return score / submissions.length || 0 // you can't divide by submissions.length == 0 
             }
         },
     })
